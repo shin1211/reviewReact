@@ -1,41 +1,98 @@
 import { useState } from 'react';
-import ExpenseItem from './ExpenseItem';
 import ExpensesFilter from './ExpensesFilter';
+import ExpensesList from './ExpensesList';
 import Card from '../UI/Card';
 import './Expense.css'
 function Expense({ expenses }) {
     const [filteredYear, setFilteredYear] = useState('2020');
     const filterChangeHandler = (selectedYear) => {
-        console.log(selectedYear);
+        setFilteredYear(selectedYear);
     }
+
+    const filteredExpenses = expenses.filter(expense => {
+        return expense.date.getFullYear().toString() === filteredYear;
+    });
+
+    // clean way
+
+    // let expensesContent = <p>No expenses found.</p>;
+
+    // if (filteredExpenses.length > 0) {
+    //     expensesContent = filteredExpenses.map((expense) => (
+    //         <ExpenseItem
+    //             key={expense.id}
+    //             title={expense.title}
+    //             date={expense.date}
+    //             amount={expense.amount} />
+    //     ))
+    // }
+
     return (
         <Card className='expenses'>
             <ExpensesFilter
                 onCheckYear={filterChangeHandler}
                 selected={filteredYear}
             />
-            <ExpenseItem
-                title={expenses[0].title}
-                date={expenses[0].date}
-                amount={expenses[0].amount}
-            />
-            <ExpenseItem
-                title={expenses[1].title}
-                date={expenses[1].date}
-                amount={expenses[1].amount}
-            />
-            <ExpenseItem
-                title={expenses[2].title}
-                date={expenses[2].date}
-                amount={expenses[2].amount}
-            />
-            <ExpenseItem
-                title={expenses[3].title}
-                date={expenses[3].date}
-                amount={expenses[3].amount}
-            />
+
+            <ExpensesList filteredExpenses={filteredExpenses} />
+
+            {/* {
+                filteredExpenses.length === 0 ? <p>No data</p> :
+                    filteredExpenses.map((expense) => (
+                        <ExpenseItem 
+                        key={expense.id} 
+                        title={expense.title} 
+                        date={expense.date} 
+                        amount={expense.amount} />
+                    ))
+            } */}
+
+            {/* {filteredExpenses.length === 0 && <p>No data</p>}
+            {filteredExpenses.length > 0 &&
+                filteredExpenses.map((expense) => (
+                    <ExpenseItem
+                        key={expense.id}
+                        title={expense.title}
+                        date={expense.date}
+                        amount={expense.amount} />
+                ))
+            } */}
+
         </Card>
     )
 };
 
 export default Expense;
+
+
+
+
+// import { useState } from 'react';
+// import ExpenseItem from './ExpenseItem';
+// import ExpensesFilter from './ExpensesFilter';
+// import Card from '../UI/Card';
+// import './Expense.css'
+// function Expense({ expenses }) {
+//     const [filteredYear, setFilteredYear] = useState('2020');
+//     const [selected, setSelected] = useState([]);
+//     const filterChangeHandler = (selectedYear) => {
+//         setFilteredYear(selectedYear);
+//         const filteredData = expenses.filter((expense) => expense.date.getFullYear().toString() === selectedYear);
+//         setSelected(filteredData);
+//     }
+//     return (
+//         <Card className='expenses'>
+//             <ExpensesFilter
+//                 onCheckYear={filterChangeHandler}
+//                 selected={filteredYear}
+//             />
+//             {
+//                 selected.map((expense) => (
+//                     <ExpenseItem key={expense.id} title={expense.title} date={expense.date} amount={expense.amount} />
+//                 ))
+//             }
+//         </Card>
+//     )
+// };
+
+// export default Expense;
