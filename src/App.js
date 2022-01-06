@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Expense from './components/Expenses/Expense';
 import NewExpense from './components/NewExpense/NewExpense';
-
 const userData = [
   {
     id: 'e1',
@@ -34,7 +33,7 @@ function App() {
   const addExpenseHandler = (expense) => {
     // Whenever you update state, and you depend on the previous state, you should use an alternative form of this state updating function. React schedules state updates, it doesn't perform them instantly. Therefore, if you schedule a lot of state updates at the same time, you could be depending on an outdated or incorrect state snapshot.
     setExpenses((prevState) => {
-      console.log(prevState);
+
       return [expense, ...prevState];
     });
   }
